@@ -4,7 +4,10 @@ const config = {
     '@/utils': path.resolve(__dirname, '..', 'src/utils'),
     '@/pages': path.resolve(__dirname, '..', 'src/pages'),
     '@/interface': path.resolve(__dirname, '..', 'src/interface'),
-    '@/components': path.resolve(__dirname, '..', 'src/components')
+    '@/components': path.resolve(__dirname, '..', 'src/components'),
+    '@/constants': path.resolve(__dirname, '..', 'src/constants'),
+    '@/store': path.resolve(__dirname, '..', 'src/store'),
+    '@/services': path.resolve(__dirname, '..', 'src/services'),
   },
   projectName: 'v2ex-miniprogram',
   date: '2019-8-16',
@@ -41,6 +44,13 @@ const config = {
   },
   weapp: {
     module: {
+      cssModules: {
+        enable: true, // 默认为 false，如需使用 css modules 功能，则设为 true
+        config: {
+          namingPattern: 'module', // 转换模式，取值为 global/module，下文详细说明
+          generateScopedName: '[name]__[local]___[hash:base64:5]'
+        }
+      },
       postcss: {
         autoprefixer: {
           enable: true,

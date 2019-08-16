@@ -1,21 +1,9 @@
 import Taro, { Component, Config } from '@tarojs/taro';
 import { View, Text } from '@tarojs/components';
 import './index.scss';
-import Api from '@/services';
-import { observer, inject } from '@tarojs/mobx';
-import { ComponentType } from 'react';
+import { request } from '@/utils/request';
 
-type PageStateProps = {
-    session: {
-        user: any;
-        logged: Function;
-        logout: Function;
-    };
-};
-
-@inject('session')
-@observer
-class Index extends Component<PageStateProps> {
+export default class Index extends Component {
     /**
      * 指定config的类型声明为: Taro.Config
      *
@@ -28,10 +16,8 @@ class Index extends Component<PageStateProps> {
     };
 
     async componentWillMount() {
-        console.log('this.props');
-        console.log(this.props);
         try {
-            const data = await Api.getHomeData();
+            const data = await request.get('/');
             console.log(data);
         } catch (error) {
             console.log(error);
@@ -54,5 +40,3 @@ class Index extends Component<PageStateProps> {
         );
     }
 }
-
-export default Index as ComponentType;
