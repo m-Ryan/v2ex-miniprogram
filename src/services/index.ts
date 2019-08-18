@@ -1,7 +1,7 @@
 import { request } from '@/utils/request';
 
-export default class Api {
-    static getHomeData() {
-        return request.get('/v2ex');
-    }
+export const services = {
+  getHomeData() {
+    return request.get('/v2ex');
+  }
 }

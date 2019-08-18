@@ -1,0 +1,44 @@
+@import 'src/style/common.scss';
+.container {
+  padding: 20px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #ccc;
+  display: flex;
+  align-items: center;
+
+  .avatar {
+    height: 100px;
+    width: 100px;
+    border-radius: 10px;
+  }
+
+  .content {
+    margin-left: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100px;
+    .title {
+      font-size: 28px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      width: 560px;
+    }
+    .desc {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      .descItem {
+        font-size: 24px;
+      }
+      .tag {
+        font-size: 22px;
+        color:  $primary-color;
+        border-radius: 20px;
+        padding: 6px 15px;
+        background-color: #fafafa;
+      }
+    }
+  }
+}

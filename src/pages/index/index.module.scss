@@ -1,0 +1,13 @@
+@import 'src/style/common.scss';
+.container {
+  .search {
+    height: 80px;
+    padding: 10px 20px;
+    background-color: $primary-color;
+    .input {
+      height: 60px;
+      border-radius: 50px;
+      background: #fff;
+    }
+  }
+}

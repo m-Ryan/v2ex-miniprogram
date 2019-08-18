@@ -1,7 +1,7 @@
 import { observable } from 'mobx';
 import { IUser } from '@/interface/user';
 
-const session = observable({
+export const session = observable({
     user: null,
     logged(user: IUser) {
         this.user = user;
@@ -10,4 +10,3 @@ const session = observable({
         this.user = null;
     },
 });
-export default session;

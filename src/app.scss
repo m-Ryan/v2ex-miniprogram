@@ -1,0 +1,6 @@
+@import 'src/style/common.scss';
+$color-brand: $primary-color;
+@import "~taro-ui/dist/style/components/tag.scss";
+view, text, image {
+  box-sizing:border-box;
+}

@@ -6,6 +6,7 @@ import './app.scss';
 import { PRIMARY_COLOR } from './constants';
 import { Provider } from '@tarojs/mobx';
 import { store } from './store';
+import { View } from '@tarojs/components';
 
 // 如果需要在 h5 环境中开启 React Devtools
 // 取消以下注释：
@@ -68,9 +69,11 @@ class App extends Component {
     // 请勿修改此函数
     render() {
         return (
-            <Provider store={store}>
+            <View>
+              <Provider store={store}>
                 <Index />
-            </Provider>
+              </Provider>
+            </View>
         );
     }
 }

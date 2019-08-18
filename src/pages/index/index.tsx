@@ -1,21 +1,26 @@
 import Taro, { Component, Config } from '@tarojs/taro';
-import { View, Text } from '@tarojs/components';
-import './index.scss';
-import Api from '@/services';
+import { View, Input } from '@tarojs/components';
+import styles from './index.module.scss';
+import {services} from '@/services';
 import { observer, inject } from '@tarojs/mobx';
 import { ComponentType } from 'react';
+import { store } from '../../store/index';
+import { ListItem } from '@/components/list-item';
 
-type PageStateProps = {
-    session: {
-        user: any;
-        logged: Function;
-        logout: Function;
-    };
-};
+interface IState {
+  list: [],
+  inited: boolean
+}
+interface IProps {
 
-@inject('session')
+}
+@inject('tags')
 @observer
-class Index extends Component<PageStateProps> {
+class Index extends Component<IProps, IState> {
+  state: IState = {
+    list: [],
+    inited: false
+  }
     /**
      * 指定config的类型声明为: Taro.Config
      *
@@ -28,28 +33,34 @@ class Index extends Component<PageStateProps> {
     };
 
     async componentWillMount() {
-        console.log('this.props');
-        console.log(this.props);
         try {
-            const data = await Api.getHomeData();
-            console.log(data);
+            const data = await services.getHomeData();
+            store.tags.setNewTags(data.hot_nodes);
+            this.setState({
+              list: data.list,
+              inited: true
+            })
         } catch (error) {
             console.log(error);
         }
     }
-
-    componentDidMount() {}
-
-    componentWillUnmount() {}
 
     componentDidShow() {}
 
     componentDidHide() {}
 
     render() {
+      const { list, inited } = this.state;
         return (
-            <View className="index">
-                <Text>Hello world!</Text>
+            <View className={styles.container}>
+                <View className={styles.search}>
+                  <Input type="text" className={styles.input} />
+                </View>
+                <View className={styles.list}>
+                  {
+                    inited && list.map((item, index)=><ListItem data={item} key={index} />)
+                  }
+                </View>
             </View>
         );
     }
