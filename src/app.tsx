@@ -4,7 +4,7 @@ import Index from './pages/index';
 
 import './app.scss';
 import { PRIMARY_COLOR } from './constants';
-import { Provider } from '@tarojs/mobx';
+import { Provider, inject } from '@tarojs/mobx';
 import { store } from './store';
 import { View } from '@tarojs/components';
 
@@ -13,8 +13,15 @@ import { View } from '@tarojs/components';
 // if (process.env.NODE_ENV !== 'production' && process.env.TARO_ENV === 'h5')  {
 //   require('nerv-devtools')
 // }
+interface IAppState {
+    hasLogin: boolean
+}
 
-class App extends Component {
+class App extends Component<{}, IAppState> {
+    state: IAppState = {
+        hasLogin: false
+    }
+
     /**
      * 指定config的类型声明为: Taro.Config
      *
@@ -57,7 +64,28 @@ class App extends Component {
         },
     };
 
-    componentDidMount() {}
+    componentDidMount() {
+        this.login()
+    }
+
+    async login() {
+        try {
+            // const data = await Taro.login();
+            const res = await Taro.getSetting();
+            if (!res.authSetting['scope.userInfo']) {
+               const authData = await Taro.authorize({
+                    scope: 'scope.userInfo'
+                })
+                console.log(authData)
+            }
+            // store.user.loggin(userInfo)
+            this.setState({
+                hasLogin: true
+            })
+        } catch (error) {
+            console.log(error)
+        }
+    }
 
     componentDidShow() {}
 
@@ -68,10 +96,12 @@ class App extends Component {
     // 在 App 类中的 render() 函数没有实际作用
     // 请勿修改此函数
     render() {
+        const  { hasLogin } = this.state;
+        const renderPage = hasLogin ? <Index /> : null;
         return (
             <View>
               <Provider store={store}>
-                <Index />
+               { renderPage }
               </Provider>
             </View>
         );

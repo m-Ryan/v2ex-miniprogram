@@ -2,7 +2,7 @@
 	"miniprogramRoot": "dist/",
 	"projectname": "v2ex-miniprogram",
 	"description": "v2ex-miniprogram",
-	"appid": "touristappid",
+	"appid": "wxd1a8490eee639352",
 	"setting": {
 		"urlCheck": false,
 		"es6": false,

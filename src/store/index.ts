@@ -1,7 +1,7 @@
-import { session } from './session';
+import { user } from './user';
 import { tags } from './tags';
 
 export const store = {
-    session,
+    user,
     tags
 };

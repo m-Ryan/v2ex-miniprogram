@@ -19,7 +19,7 @@ export function ListItem(props: IProps) {
           {item.title}
         </View>
         <View className={styles.desc}>
-          <View className={styles.tag}>{item.tag.text}</View>
+          <View className={styles.tag}>{item.tag.name}</View>
           <Text className={styles.descItem}>
             {item.user.name}
           </Text>

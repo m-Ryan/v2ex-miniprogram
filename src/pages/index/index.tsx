@@ -6,14 +6,19 @@ import { observer, inject } from '@tarojs/mobx';
 import { ComponentType } from 'react';
 import { store } from '../../store/index';
 import { ListItem } from '@/components/list-item';
+import { ITagItem } from '@/interface/user';
+import { IStoreUser } from '@/store/user';
 
 interface IState {
   list: [],
   inited: boolean
 }
 interface IProps {
-
+  user: IStoreUser,
+  tags: ITagItem
 }
+
+@inject('user')
 @inject('tags')
 @observer
 class Index extends Component<IProps, IState> {
@@ -37,7 +42,7 @@ class Index extends Component<IProps, IState> {
             const data = await services.getHomeData();
             store.tags.setNewTags(data.hot_nodes);
             this.setState({
-              list: data.list,
+              // list: data.list,
               inited: true
             })
         } catch (error) {
@@ -51,15 +56,14 @@ class Index extends Component<IProps, IState> {
 
     render() {
       const { list, inited } = this.state;
+      const renderList =  inited && list.map((item, index)=><ListItem data={item} key={index} />)
         return (
             <View className={styles.container}>
                 <View className={styles.search}>
                   <Input type="text" className={styles.input} />
                 </View>
                 <View className={styles.list}>
-                  {
-                    inited && list.map((item, index)=><ListItem data={item} key={index} />)
-                  }
+                  { renderList }
                 </View>
             </View>
         );

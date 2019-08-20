@@ -5,17 +5,17 @@ export interface ITagStore {
   new: ITagItem[]
 }
 export const tags = observable({
-    tags: {
+  data: {
       hot: [],
       new: []
-    },
+    } as ITagStore,
     setHotTags(tags: ITagItem[]) {
-      this.tags.hot = tags
+      this.data.hot = tags
     },
     setNewTags(tags: ITagItem[]) {
-      this.tags.new = tags
+      this.data.new = tags
     },
     get newNode() {
-      return JSON.stringify(this.tags.new[0])
+      return JSON.stringify(this.data.new[0])
     }
 });
