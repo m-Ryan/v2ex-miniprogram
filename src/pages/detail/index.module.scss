@@ -1,0 +1,64 @@
+.scrollview {
+  height: 100vh;
+  .container {
+    height: 100%;
+    padding: 20px 40px;
+    .title{
+      text-align: left;
+      margin-top: 40px;
+      font-weight: bold;
+      font-size: 36px;
+    }
+    .relativeInfo {
+      font-size: 28px;
+      color: #666;
+      margin: 10px 0;
+    }
+    .desc {
+      font-size: 32px;
+    }
+  }
+  
+  .replay {
+    border-top: 1px solid #ccc;
+    margin-top: 40px;
+    padding-bottom: 50px;
+  
+    .replayItem {
+      padding: 20px;
+      border-bottom: 1px solid #ccc;
+      .top {
+        display: flex;
+  
+        .avatar {
+          height: 70px;
+          width: 70px;
+          border-radius: 10px;
+          margin-right: 20px;
+        }
+        .floor {
+          margin-right: 10px;
+        }
+        .name {
+          font-size: 28px;
+          color: #333;
+        }
+        .date {
+          font-size: 28px;
+          color: #333;
+        }
+      }
+  
+      .bottom {
+        font-size: 28px;
+        color: #555;
+        margin-top: 15px;
+      }
+  
+    }
+  
+    .pagination {
+      padding: 20px 0;
+    }
+  }
+}

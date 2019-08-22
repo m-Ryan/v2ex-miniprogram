@@ -32,7 +32,15 @@ const config = {
         'transform-class-properties',
         'transform-object-rest-spread'
       ]
+    },
+    sass: {
+      resource: [path.resolve(__dirname, '..', 'src/styles/variable.scss')],
+      // OR 
+      // resource:  ['path/to/global.variable.scss', 'path/to/global.mixin.scss']
+      projectDirectory: path.resolve(__dirname, '..'),
+      data: '$nav-height: 48px;',
     }
+  
   },
   defineConstants: {
   },

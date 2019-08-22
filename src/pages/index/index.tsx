@@ -42,7 +42,7 @@ class Index extends Component<IProps, IState> {
             const data = await services.getHomeData();
             store.tags.setNewTags(data.hot_nodes);
             this.setState({
-              // list: data.list,
+              list: data.list,
               inited: true
             })
         } catch (error) {

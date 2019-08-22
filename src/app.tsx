@@ -4,15 +4,16 @@ import Index from './pages/index';
 
 import './app.scss';
 import { PRIMARY_COLOR } from './constants';
-import { Provider, inject } from '@tarojs/mobx';
+import { Provider } from '@tarojs/mobx';
 import { store } from './store';
-import { View } from '@tarojs/components';
 
 // 如果需要在 h5 环境中开启 React Devtools
 // 取消以下注释：
 // if (process.env.NODE_ENV !== 'production' && process.env.TARO_ENV === 'h5')  {
 //   require('nerv-devtools')
 // }
+
+
 interface IAppState {
     hasLogin: boolean
 }
@@ -30,7 +31,7 @@ class App extends Component<{}, IAppState> {
      * 提示和声明 navigationBarTextStyle: 'black' | 'white' 类型冲突, 需要显示声明类型
      */
     config: Config = {
-        pages: ['pages/index/index', 'pages/list/index', 'pages/user/index'],
+        pages: ['pages/index/index', 'pages/list/index', 'pages/user/index', 'pages/detail/index'],
         window: {
             backgroundTextStyle: 'light',
             navigationBarBackgroundColor: '#fff',
@@ -72,13 +73,7 @@ class App extends Component<{}, IAppState> {
         try {
             // const data = await Taro.login();
             const res = await Taro.getSetting();
-            if (!res.authSetting['scope.userInfo']) {
-               const authData = await Taro.authorize({
-                    scope: 'scope.userInfo'
-                })
-                console.log(authData)
-            }
-            // store.user.loggin(userInfo)
+            console.log(res)
             this.setState({
                 hasLogin: true
             })
@@ -99,11 +94,9 @@ class App extends Component<{}, IAppState> {
         const  { hasLogin } = this.state;
         const renderPage = hasLogin ? <Index /> : null;
         return (
-            <View>
-              <Provider store={store}>
-               { renderPage }
-              </Provider>
-            </View>
+            <Provider store={store}>
+                { renderPage }
+            </Provider>
         );
     }
 }

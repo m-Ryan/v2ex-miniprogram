@@ -9,7 +9,7 @@ class Request {
     }
     private BASE_URL: string = '';
 
-    private use(
+    private use<T>(
         url: string,
         method: 'GET' | 'POST',
         data?: IObject<any>,
@@ -25,17 +25,17 @@ class Request {
         if (data) config.data = data;
         if (header) config.header = header;
 
-        return Taro.request(config).then(res => {
+        return Taro.request<T>(config).then(res => {
             return res.data;
         });
     }
 
-    get(url: string, params?: IObject<any>, header?: IObject<string>) {
-        return this.use(url, 'GET', params, header);
+    get<T>(url: string, params?: IObject<any>, header?: IObject<string>) {
+        return this.use<T>(url, 'GET', params, header);
     }
 
-    post(url: string, data?: IObject<any>, header?: IObject<string>) {
-        return this.use(url, 'GET', data, header);
+    post<T>(url: string, data?: IObject<any>, header?: IObject<string>) {
+        return this.use<T>(url, 'GET', data, header);
     }
 }
 

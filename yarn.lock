@@ -1055,6 +1055,11 @@
   version "15.7.1"
   resolved "http://npm.goweike.cn/@types%2fprop-types/-/prop-types-15.7.1.tgz#f1a11e7babb0c3cad68100be381d1e064c68f1f6"
 
+"@types/qs@^6.5.3":
+  version "6.5.3"
+  resolved "http://npm.goweike.cn/@types%2fqs/-/qs-6.5.3.tgz#1c3b71b091eaeaf5924538006b7f70603ce63d38"
+  integrity sha1-HDtxsJHq6vWSRTgAa39wYDzmPTg=
+
 "@types/react@^16.4.6", "@types/react@^16.7.3":
   version "16.9.2"
   resolved "http://npm.goweike.cn/@types%2freact/-/react-16.9.2.tgz#6d1765431a1ad1877979013906731aae373de268"
@@ -6791,6 +6796,11 @@ punycode@^2.1.0:
 qs@6.7.0:
   version "6.7.0"
   resolved "http://npm.goweike.cn/qs/-/qs-6.7.0.tgz#41dc1a015e3d581f1621776be31afb2876a9b1bc"
+
+qs@^6.8.0:
+  version "6.8.0"
+  resolved "http://npm.goweike.cn/qs/-/qs-6.8.0.tgz#87b763f0d37ca54200334cd57bb2ef8f68a1d081"
+  integrity sha1-h7dj8NN8pUIAM0zVe7Lvj2ih0IE=
 
 qs@~6.5.2:
   version "6.5.2"

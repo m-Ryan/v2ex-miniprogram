@@ -7,7 +7,10 @@ export interface IListItem {
   title: string;
   url: string;
   user: IUser;
-  tag: ITagItem;
+  relative: {
+    name: string;
+    url: string;
+  },
   last_replay: ILast_replay;
   replay_count: string | number;
 }
