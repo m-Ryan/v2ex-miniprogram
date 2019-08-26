@@ -1,13 +1,76 @@
 
+
 .container {
-  .search {
-    height: 80px;
-    padding: 10px 20px;
-    background-color: $primary-color;
-    .input {
-      height: 60px;
-      border-radius: 50px;
-      background: #fff;
+
+  .baseTab {
+    height: calc(100vh - 96px);
+    overflow-y: auto;
+  }
+  .tab1 {
+    @extend .baseTab;
+    .search {
+      height: 80px;
+      padding: 10px 20px;
+      background-color: $primary-color;
+      .input {
+        height: 60px;
+        border-radius: 50px;
+        background: #fff;
+      }
+    }
+  }
+  .tab2 {
+    @extend .baseTab;
+    .node {
+      .nodeTile {
+        height: 80px;
+        line-height: 80px;
+        font-size: 32px;
+        font-weight: bold;
+        border-bottom: 1px solid #ccc;
+        padding: 0 20px;
+      }
+      .nodeList {
+        margin-bottom: 60px;
+        .nodeItem {
+          padding: 20px;
+          margin-bottom: 20px;
+          border-bottom: 1px solid #ccc;
+          display: flex;
+
+          .avatar {
+            height: 70px;
+            width: 70px;
+            margin-right: 20px;
+            image {
+              height: 100%;
+              width: 100%;
+              border-radius: 10px;
+            }
+          }
+          .title {
+            font-size: 28px;
+            overflow: hidden;
+            flex: 1;
+            @extend .textover-flow-2;
+          }
+        }
+      }
+      .tagList {
+        padding: 20px;
+        margin-bottom: 30px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        .tagItem {
+          font-size: 24px;
+          padding: 10px 20px;
+          color: #666;
+          border-radius: 10px;
+          border: 1px solid #ccc;
+          margin-bottom: 20px;
+        }
+      }
     }
   }
 }

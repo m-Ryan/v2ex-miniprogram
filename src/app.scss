@@ -1,10 +1,10 @@
 
 @import 'src/styles/iconfont.scss';
-
+$color-brand: $primary-color;
 @import "~taro-ui/dist/style/components/pagination.scss";
 @import "~taro-ui/dist/style/components/button.scss";
 @import "~taro-ui/dist/style/components/icon.scss";
-
+@import "~taro-ui/dist/style/components/tabs.scss";
 view, text, image, scroll-view {
   box-sizing:border-box;
 }

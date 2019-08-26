@@ -3,13 +3,13 @@ import { View, Text, Image, ScrollView } from '@tarojs/components';
 import styles from './index.module.scss';
 import { DEFAULT_TITLE } from '@/constants';
 import { services } from '@/services';
-import { IDetail } from '@/interface/detail';
 import { formatV2exUrl } from '@/utils/util';
 import { BindThis } from '@/utils/bind-this';
 import { throttle } from '@/utils/throttle';
+import { IV2exDetail } from '@/interface/v2ex/detail';
 
 interface IState {
-    data: IDetail | null,
+    data: IV2exDetail | null,
     currentPage: number
 }
 

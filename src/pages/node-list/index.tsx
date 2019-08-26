@@ -1,37 +1,44 @@
 import Taro, { Component, Config } from '@tarojs/taro';
-import { View } from '@tarojs/components';
+import { View, Image } from '@tarojs/components';
 import styles from './index.module.scss';
 import {services} from '@/services';
 import { observer, inject } from '@tarojs/mobx';
 import { ComponentType } from 'react';
 import { ListItem } from '@/components/list-item';
 import { IStoreUser } from '@/store/user';
-import { IV2exList } from '@/interface/v2ex/list';
 import { BindThis } from '@/utils/bind-this';
 import { throttle } from '@/utils/throttle';
 import { Pagination } from '@/components/pagination';
+import { IV2exNodeList } from '@/interface/v2ex/node-list';
+import { formatV2exUrl } from '@/utils/util';
 
 interface IState {
-  data: IV2exList,
+  nodeName: string,
+  nodePath: string,
+  data: IV2exNodeList,
   nextData: {
-    data: IV2exList | null,
+    data: IV2exNodeList | null,
     page: number
   },
   inited: boolean,
   page: number
 }
 interface IProps {
-  user: IStoreUser
+ 
 }
 
-@inject('user')
 @observer
 @BindThis()
 class Index extends Component<IProps, IState> {
   state: IState = {
+    nodeName: decodeURIComponent(this.$router.params.name),
+    nodePath: this.$router.params.path || '',
     data: {
       page_count: 1,
-      list: []
+      list: [],
+      slogans: '',
+      avatar: '',
+      relative: []
     },
     nextData: {
       data: null,
@@ -58,12 +65,12 @@ class Index extends Component<IProps, IState> {
 
     @throttle(1000)
     async getPageList() {
-      const { nextData, page } = this.state;
+      const { nextData, page, nodePath } = this.state;
       Taro.showLoading({
         title: '正在加载数据'
       })
       try {
-        const data = nextData.page === page ? nextData.data! : await services.getListData(page);
+        const data = nextData.page === page ? nextData.data! : await services.getNodeList(nodePath, page);
         
         this.setState({
           data,
@@ -90,9 +97,10 @@ class Index extends Component<IProps, IState> {
     }
 
     async loadNextPage() {
-      const nextPage = this.state.page + 1;
+      const { page, nodePath } = this.state;
+      const nextPage = page + 1;
       try {
-        const data = await services.getListData(nextPage);
+        const data = await services.getNodeList(nodePath, nextPage);
         this.setState({
           nextData: {
             data,
@@ -105,24 +113,35 @@ class Index extends Component<IProps, IState> {
     }
 
     render() {
-      const { data, inited, page } = this.state;
+      const { data, inited, page, nodeName } = this.state;
       const renderList =  inited && data.list.map((item, index)=><ListItem data={item} key={index} />);
       const renderContainer = 
         inited 
         ? (
           <View className={styles.container}>
-                <View className={styles.list}>
-                  { renderList }
+            <View className={styles.header}>
+              <View className={styles.avatar}><Image src={formatV2exUrl(data.avatar)} mode="widthFix" /></View>
+              <View>
+                <View className={styles.title}>
+                  { nodeName }
                 </View>
-                <View className={styles.pagination}>
-                  <Pagination 
-                    total={data.page_count} 
-                    current={page}
-                    onChange={this.onPageChange}
-                  >
-                  </Pagination>
+                <View className={styles.slogans}>
+                  { data.slogans }
                 </View>
+              </View>
             </View>
+            <View className={styles.list}>
+              { renderList }
+            </View>
+            <View className={styles.pagination}>
+              <Pagination 
+                total={data.page_count} 
+                current={page}
+                onChange={this.onPageChange}
+              >
+              </Pagination>
+            </View>
+          </View>
         )
         : null;
         return renderContainer;

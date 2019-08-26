@@ -1,13 +1,14 @@
 import Taro, { Component } from '@tarojs/taro';
 import { View, Image, Text } from '@tarojs/components';
-import { IListItem } from '@/interface/user';
 import styles from './index.module.scss';
 import { formatV2exUrl, formatClassName, formatPath, getDetailId } from '@/utils/util';
 import { BindThis } from '@/utils/bind-this';
 import { Pages } from '@/constants';
+import { IListItem } from '@/interface/v2ex/info';
+import { INodeListItem } from '@/interface/v2ex/node-list';
 
 type IProps  = {
-  data: IListItem
+  data: IListItem | INodeListItem
 }
 
 @BindThis()
@@ -19,7 +20,7 @@ export class ListItem extends Component<IProps> {
   goDetail() {
     Taro.navigateTo({
       url: formatPath(Pages.DetailIndex, {
-        page: getDetailId(this.props.data.url)
+        id: getDetailId(this.props.data.url)
       }),
     })
   }
@@ -30,20 +31,20 @@ export class ListItem extends Component<IProps> {
       
       return (
         <View className={styles.container} onClick={this.goDetail}>
-          <Image src={formatV2exUrl(item.user.avatar)} mode="widthFix" className={styles.avatar} />
+          <View className={styles.avatar} ><Image src={formatV2exUrl(item.user.avatar)} mode="widthFix" /></View>
           <View className={styles.content}>
             <View className={styles.desc}>
               <View className={styles.left}>
-                <View className={styles.tag}>{item.relative.name}</View>
-                <Text className={styles.descItem}>
+                {item.tag && <View className={styles.tag}>{item.tag.name}</View>}
+                <Text className={formatClassName(styles.descItem, styles.name)}>
                   {item.user.name}
                 </Text>
-                <Text className={styles.descItem}>
+                <Text className={formatClassName(styles.descItem, styles.date)}>
                   {item.last_replay.time}
                 </Text>
               </View>
               <View className={styles.right}>
-                <Text className={formatClassName(styles.replayCount, "icon anticon icon-clockcircleo")} > {item.replay_count}</Text>
+                <Text className={formatClassName(styles.replayCount, "icon anticon icon-eyeo")} > {item.replay_count}</Text>
               </View>
             </View>
             <View className={styles.title}>

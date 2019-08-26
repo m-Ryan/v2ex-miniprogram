@@ -31,7 +31,7 @@ class App extends Component<{}, IAppState> {
      * 提示和声明 navigationBarTextStyle: 'black' | 'white' 类型冲突, 需要显示声明类型
      */
     config: Config = {
-        pages: ['pages/index/index', 'pages/list/index', 'pages/user/index', 'pages/detail/index'],
+        pages: ['pages/index/index', 'pages/list/index', 'pages/user/index', 'pages/detail/index', 'pages/node-list/index'],
         window: {
             backgroundTextStyle: 'light',
             navigationBarBackgroundColor: '#fff',
@@ -40,25 +40,25 @@ class App extends Component<{}, IAppState> {
         },
         tabBar: {
             color: '#333',
-            selectedColor: PRIMARY_COLOR,
+            selectedColor: '#2b7489',
             list: [
                 {
                     pagePath: 'pages/index/index',
                     text: '首页',
                     iconPath: 'images/home.png',
-                    selectedIconPath: 'images/home.png',
-                },
-                {
-                    pagePath: 'pages/user/index',
-                    text: '列表',
-                    iconPath: 'images/home.png',
-                    selectedIconPath: 'images/home.png',
+                    selectedIconPath: 'images/home-active.png',
                 },
                 {
                     pagePath: 'pages/list/index',
+                    text: '列表',
+                    iconPath: 'images/more.png',
+                    selectedIconPath: 'images/more-active.png',
+                },
+                {
+                    pagePath: 'pages/user/index',
                     text: '我的',
-                    iconPath: 'images/home.png',
-                    selectedIconPath: 'images/home.png',
+                    iconPath: 'images/mine.png',
+                    selectedIconPath: 'images/mine-active.png',
                 },
             ],
             backgroundColor: '#fff',

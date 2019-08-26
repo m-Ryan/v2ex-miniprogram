@@ -32,13 +32,27 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 0,
+			"current": 2,
 			"list": [
 				{
 					"id": 0,
 					"name": "pages/detail/index",
 					"pathName": "pages/detail/index",
 					"query": "id=593552",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/list/index",
+					"pathName": "pages/list/index",
+					"query": "page=1",
+					"scene": null
+				},
+				{
+					"id": 2,
+					"name": "pages/node-list/index",
+					"pathName": "pages/node-list/index",
+					"query": "path=qna&name=问与答",
 					"scene": null
 				}
 			]

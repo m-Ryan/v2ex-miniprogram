@@ -19,3 +19,7 @@ export function formatPath(url: string, query?: IObject<string>) {
 export function getDetailId(url: string) {
   return parseInt(url.replace('/t/', '')).toString();
 }
+
+export function getNodeName(url: string) {
+  return url.replace('/go/', '');
+}
