@@ -1,6 +1,5 @@
 .container {
-  padding: 20px;
-  margin-bottom: 20px;
+  padding: 20px 30px;
   border-bottom: 1px solid #ccc;
   display: flex;
 
@@ -10,6 +9,7 @@
     image {
       height: 100%;
       width: 100%;
+      min-width: 120px;
       border-radius: 10px;
     }
   }
@@ -43,26 +43,31 @@
       .descItem {
         font-size: 24px;
         margin-right: 1em;
+        &:active {
+          opacity: 0.6;
+        }
       }
       .name {
-        max-width: 8em;
+        max-width: 6em;
         overflow: hidden;
         text-overflow: ellipsis;
       }
       .tag {
         display: flex;
         align-items: center;
-        justify-content: center;
         height: 36px;
-        font-size: 22px;
+        font-size: 20px;
         color: #fff;
-        border-radius: 20px;
+        border-radius: 4px;
         padding: 0px 10px;
         background-color: $primary-color;
         margin-right: 10px;
+        max-width: 8em;
+        @extend .textover-flow;
       }
       .date {
         color: #666;
+        font-size: 20px;
       }
     }
   }

@@ -6,19 +6,14 @@ import { observer, inject } from '@tarojs/mobx';
 import { ComponentType } from 'react';
 import { ListItem } from '@/components/list-item';
 import { IStoreUser } from '@/store/user';
-import { IV2exList } from '@/interface/v2ex/list';
 import { BindThis } from '@/utils/bind-this';
 import { throttle } from '@/utils/throttle';
-import { Pagination } from '@/components/pagination';
+import CookieStorage from '@/utils/cookie-storage';
+import { IListItem } from '@/interface/v2ex/info';
 
 interface IState {
-  data: IV2exList,
-  nextData: {
-    data: IV2exList | null,
-    page: number
-  },
+  data: IListItem[],
   inited: boolean,
-  page: number
 }
 interface IProps {
   user: IStoreUser
@@ -29,15 +24,7 @@ interface IProps {
 @BindThis()
 class Index extends Component<IProps, IState> {
   state: IState = {
-    data: {
-      page_count: 1,
-      list: []
-    },
-    nextData: {
-      data: null,
-      page: 0
-    },
-    page: 1,
+    data: [],
     inited: false
   }
     /**
@@ -48,7 +35,7 @@ class Index extends Component<IProps, IState> {
      * 提示和声明 navigationBarTextStyle: 'black' | 'white' 类型冲突, 需要显示声明类型
      */
     config: Config = {
-        navigationBarTitleText: '列表',
+        navigationBarTitleText: '收藏',
     };
 
     componentWillMount() {
@@ -58,72 +45,34 @@ class Index extends Component<IProps, IState> {
 
     @throttle(1000)
     async getPageList() {
-      const { nextData, page } = this.state;
       Taro.showLoading({
         title: '正在加载数据'
       })
       try {
-        const data = nextData.page === page ? nextData.data! : await services.getListData(page);
+        const data = await services.getCollection(CookieStorage.getCookie());
         
         this.setState({
           data,
-          page,
           inited: true
         }, ()=>{
           Taro.hideLoading();
-          Taro.pageScrollTo({
-            scrollTop: 0
-          })
-          // 预加载下一页
-          this.loadNextPage();
         })
       } catch (error) {
           console.log(error);
           Taro.hideLoading();
-          this.getPageList();
       }
     }
 
-    onPageChange(page: number) {
-      this.setState({
-        page
-      }, ()=> {
-        this.getPageList();
-      })
-    }
-
-    async loadNextPage() {
-      const nextPage = this.state.page + 1;
-      try {
-        const data = await services.getListData(nextPage);
-        this.setState({
-          nextData: {
-            data,
-            page: nextPage
-          }
-        })
-      } catch (error) {
-          console.log(error);
-      }
-    }
-
+  
     render() {
-      const { data, inited, page } = this.state;
-      const renderList =  inited && data.list.map((item, index)=><ListItem data={item} key={index} />);
+      const { data, inited } = this.state;
+      const renderList =  inited && data.map((item, index)=><ListItem data={item} key={index} />);
       const renderContainer = 
         inited 
         ? (
           <View className={styles.container}>
                 <View className={styles.list}>
                   { renderList }
-                </View>
-                <View className={styles.pagination}>
-                  <Pagination 
-                    total={data.page_count} 
-                    current={page}
-                    onChange={this.onPageChange}
-                  >
-                  </Pagination>
                 </View>
             </View>
         )

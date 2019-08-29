@@ -1,11 +1,13 @@
 .scrollview {
   height: 100vh;
+  padding-bottom: 100px;
   .container {
     height: 100%;
-    padding: 20px 40px;
+    .header {
+      padding: 40px 40px 0 40px;
+    }
     .title{
       text-align: left;
-      margin-top: 40px;
       font-weight: bold;
       font-size: 36px;
     }
@@ -18,8 +20,39 @@
       font-size: 32px;
     }
   }
-  
+  .articleInfo {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: fixed;
+    z-index: 9999;
+    bottom: 0;
+    background-color: #fff;
+    border-top: 1px solid #ccc;
+    width: 100%;
+    padding: 20px;
+    .left {
+      display: flex;
+      font-size: 24px;
+      color: #666;
+      .text {
+        margin-right: 1em;
+      }
+    }
+    .right {
+      display: flex;
+      .btnItem {
+        margin-left: 1em;
+        :global(.icon) {
+          color: $primary-color;
+          font-size: 30px;
+        }
+      }
+    }
+
+  }
   .replay {
+    padding: 0px 40px;
     border-top: 1px solid #ccc;
     margin-top: 40px;
     padding-bottom: 50px;
@@ -29,7 +62,6 @@
       border-bottom: 1px solid #ccc;
       .top {
         display: flex;
-  
         .avatar {
           height: 70px;
           width: 70px;
@@ -60,5 +92,11 @@
     .pagination {
       padding: 20px 0;
     }
+  }
+  .noMore {
+    color: #666;
+    font-size: 28px;
+    padding: 40px 0;
+    text-align: center;
   }
 }

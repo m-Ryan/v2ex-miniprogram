@@ -5,7 +5,13 @@ $color-brand: $primary-color;
 @import "~taro-ui/dist/style/components/button.scss";
 @import "~taro-ui/dist/style/components/icon.scss";
 @import "~taro-ui/dist/style/components/tabs.scss";
+@import "~taro-ui/dist/style/components/list.scss";
+@import "~taro-ui/dist/style/components/tab-bar.scss";
+@import "~taro-ui/dist/style/components/badge.scss";
+@import "~taro-ui/dist/style/components/modal.scss";
 view, text, image, scroll-view {
   box-sizing:border-box;
+  font-family: Source Sans Pro,sans-serif,Lato,Helvetica Neue,Arial,PingFang SC,Hiragino Sans GB,STHeiti,Microsoft YaHei,WenQuanYi Micro Hei;
+  -webkit-font-smoothing: antialiased;
 }
 

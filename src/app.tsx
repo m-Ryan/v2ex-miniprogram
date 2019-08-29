@@ -3,7 +3,6 @@ import Taro, { Component, Config } from '@tarojs/taro';
 import Index from './pages/index';
 
 import './app.scss';
-import { PRIMARY_COLOR } from './constants';
 import { Provider } from '@tarojs/mobx';
 import { store } from './store';
 
@@ -31,14 +30,15 @@ class App extends Component<{}, IAppState> {
      * 提示和声明 navigationBarTextStyle: 'black' | 'white' 类型冲突, 需要显示声明类型
      */
     config: Config = {
-        pages: ['pages/index/index', 'pages/list/index', 'pages/user/index', 'pages/detail/index', 'pages/node-list/index'],
+        pages: ['pages/index/index', 'pages/list/index', 'pages/user/index', 'pages/member/index', 'pages/detail/index', 'pages/node-list/index', 'pages/collection/index'],
         window: {
             backgroundTextStyle: 'light',
-            navigationBarBackgroundColor: '#fff',
+            navigationBarBackgroundColor: '#2b7489',
             navigationBarTitleText: 'WeChat',
-            navigationBarTextStyle: 'black',
+            navigationBarTextStyle: 'white',
         },
         tabBar: {
+            borderStyle: 'black',
             color: '#333',
             selectedColor: '#2b7489',
             list: [

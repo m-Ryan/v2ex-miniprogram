@@ -7,24 +7,51 @@
     overflow-y: auto;
   }
   .tab1 {
+    width: 100%;
     @extend .baseTab;
-    .search {
-      height: 80px;
-      padding: 10px 20px;
-      background-color: $primary-color;
-      .input {
-        height: 60px;
-        border-radius: 50px;
-        background: #fff;
+    .baseScrollView{
+      width: 100%;
+      padding: 0 40px;
+      overflow-x: auto;
+      overflow-y: hidden;
+      border-bottom: 1px solid $primary-color;
+      .tabbar {
+        display: flex;
+        flex-wrap: nowrap;
+        color: #333;
+        font-size: 32px;
+      }
+      .secondtabbar {
+        display: flex;
+        flex-wrap: nowrap;
+        color: #333;
+        font-size: 28px;
+      }
+      .scrollviewItem {
+        padding: 10px 20px;
+        flex-shrink: 0;
+      }
+      .active {
+        color: $primary-color;
+        font-weight: bold;
       }
     }
+    .scrollTabbar {
+      @extend .baseScrollView;
+      padding: 10px 40px;
+    }
+    .scrollSecondTabbar {
+      @extend .baseScrollView;
+      padding: 8px 40px;
+    }
+
   }
   .tab2 {
     @extend .baseTab;
     .node {
       .nodeTile {
-        height: 80px;
-        line-height: 80px;
+        height: 100px;
+        line-height: 100px;
         font-size: 32px;
         font-weight: bold;
         border-bottom: 1px solid #ccc;

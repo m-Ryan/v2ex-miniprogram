@@ -2,10 +2,9 @@ import Taro, { Component, Config } from '@tarojs/taro';
 import { View, Image } from '@tarojs/components';
 import styles from './index.module.scss';
 import {services} from '@/services';
-import { observer, inject } from '@tarojs/mobx';
+import { observer } from '@tarojs/mobx';
 import { ComponentType } from 'react';
 import { ListItem } from '@/components/list-item';
-import { IStoreUser } from '@/store/user';
 import { BindThis } from '@/utils/bind-this';
 import { throttle } from '@/utils/throttle';
 import { Pagination } from '@/components/pagination';
@@ -55,10 +54,13 @@ class Index extends Component<IProps, IState> {
      * 提示和声明 navigationBarTextStyle: 'black' | 'white' 类型冲突, 需要显示声明类型
      */
     config: Config = {
-        navigationBarTitleText: '首页',
+        navigationBarTitleText: '节点',
     };
 
     componentWillMount() {
+      Taro.setNavigationBarTitle({
+        title: this.state.nodeName
+      })
       this.getPageList();
         
     }

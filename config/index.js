@@ -7,6 +7,7 @@ const config = {
     '@/components': path.resolve(__dirname, '..', 'src/components'),
     '@/constants': path.resolve(__dirname, '..', 'src/constants'),
     '@/store': path.resolve(__dirname, '..', 'src/store'),
+    '@/images': path.resolve(__dirname, '..', 'src/images'),
     '@/services': path.resolve(__dirname, '..', 'src/services'),
   },
   projectName: 'v2ex-miniprogram',

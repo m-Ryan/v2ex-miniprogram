@@ -1,6 +1,7 @@
 import Taro from '@tarojs/taro';
 import { IObject } from 'src/interface/global';
-
+import CookieStorage from './cookie-storage';
+Taro.getStorageInfoSync()
 class Request {
     constructor(baseUrl?: string) {
         if (baseUrl) {
@@ -20,13 +21,29 @@ class Request {
         const config: Taro.request.Param<any> = {
             url: httpUrl,
             method,
+            header: {}
         };
 
         if (data) config.data = data;
-        if (header) config.header = header;
+
+        if (header) {
+            config.header = {
+                ...config.header,
+                ...header
+            };
+        }
+        if (CookieStorage.getCookie()) {
+            config.header['v2ex-cookie'] = CookieStorage.getCookie();
+        }
 
         return Taro.request<T>(config).then(res => {
-            return res.data;
+            if (res.statusCode >= 200 && res.statusCode <= 300) {
+                return res.data;
+            }
+            throw {
+                message: (res.data as any).message,
+                code: (res.data as any).statusCode
+            }
         });
     }
 
@@ -39,4 +56,5 @@ class Request {
     }
 }
 
-export const request = new Request('http://localhost:3000');
+export const request = new Request('https://www.maocanhua.cn');
+// export const request = new Request('http://localhost:8843');
