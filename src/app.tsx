@@ -12,15 +12,14 @@ import { store } from './store';
 //   require('nerv-devtools')
 // }
 
-
 interface IAppState {
-    hasLogin: boolean
+    hasLogin: boolean;
 }
 
 class App extends Component<{}, IAppState> {
     state: IAppState = {
-        hasLogin: false
-    }
+        hasLogin: false,
+    };
 
     /**
      * 指定config的类型声明为: Taro.Config
@@ -30,7 +29,15 @@ class App extends Component<{}, IAppState> {
      * 提示和声明 navigationBarTextStyle: 'black' | 'white' 类型冲突, 需要显示声明类型
      */
     config: Config = {
-        pages: ['pages/index/index', 'pages/list/index', 'pages/user/index', 'pages/member/index', 'pages/detail/index', 'pages/node-list/index', 'pages/collection/index'],
+        pages: [
+            'pages/index/index',
+            'pages/list/index',
+            'pages/user/index',
+            'pages/member/index',
+            'pages/detail/index',
+            'pages/node-list/index',
+            'pages/collection/index',
+        ],
         window: {
             backgroundTextStyle: 'light',
             navigationBarBackgroundColor: '#2b7489',
@@ -66,19 +73,19 @@ class App extends Component<{}, IAppState> {
     };
 
     componentDidMount() {
-        this.login()
+        this.login();
     }
 
     async login() {
         try {
             // const data = await Taro.login();
             const res = await Taro.getSetting();
-            console.log(res)
+            console.log(res);
             this.setState({
-                hasLogin: true
-            })
+                hasLogin: true,
+            });
         } catch (error) {
-            console.log(error)
+            console.log(error);
         }
     }
 
@@ -91,13 +98,9 @@ class App extends Component<{}, IAppState> {
     // 在 App 类中的 render() 函数没有实际作用
     // 请勿修改此函数
     render() {
-        const  { hasLogin } = this.state;
+        const { hasLogin } = this.state;
         const renderPage = hasLogin ? <Index /> : null;
-        return (
-            <Provider store={store}>
-                { renderPage }
-            </Provider>
-        );
+        return <Provider store={store}>{renderPage}</Provider>;
     }
 }
 

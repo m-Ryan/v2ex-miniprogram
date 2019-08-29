@@ -1,7 +1,7 @@
 import Taro, { Component, Config } from '@tarojs/taro';
 import { View } from '@tarojs/components';
 import styles from './index.module.scss';
-import {services} from '@/services';
+import { services } from '@/services';
 import { observer, inject } from '@tarojs/mobx';
 import { ComponentType } from 'react';
 import { ListItem } from '@/components/list-item';
@@ -12,34 +12,34 @@ import { throttle } from '@/utils/throttle';
 import { Pagination } from '@/components/pagination';
 
 interface IState {
-  data: IV2exList,
-  nextData: {
-    data: IV2exList | null,
-    page: number
-  },
-  inited: boolean,
-  page: number
+    data: IV2exList;
+    nextData: {
+        data: IV2exList | null;
+        page: number;
+    };
+    inited: boolean;
+    page: number;
 }
 interface IProps {
-  user: IStoreUser
+    user: IStoreUser;
 }
 
 @inject('user')
 @observer
 @BindThis()
 class Index extends Component<IProps, IState> {
-  state: IState = {
-    data: {
-      page_count: 1,
-      list: []
-    },
-    nextData: {
-      data: null,
-      page: 0
-    },
-    page: 1,
-    inited: false
-  }
+    state: IState = {
+        data: {
+            page_count: 1,
+            list: [],
+        },
+        nextData: {
+            data: null,
+            page: 0,
+        },
+        page: 1,
+        inited: false,
+    };
     /**
      * 指定config的类型声明为: Taro.Config
      *
@@ -52,82 +52,88 @@ class Index extends Component<IProps, IState> {
     };
 
     componentWillMount() {
-      this.getPageList();
-        
+        this.getPageList();
     }
 
     @throttle(1000)
     async getPageList() {
-      const { nextData, page } = this.state;
-      Taro.showLoading({
-        title: '正在加载数据'
-      })
-      try {
-        const data = nextData.page === page ? nextData.data! : await services.getListData(page);
-        
-        this.setState({
-          data,
-          page,
-          inited: true
-        }, ()=>{
-          Taro.hideLoading();
-          Taro.pageScrollTo({
-            scrollTop: 0
-          })
-          // 预加载下一页
-          this.loadNextPage();
-        })
-      } catch (error) {
-          console.log(error);
-          Taro.hideLoading();
-          this.getPageList();
-      }
+        const { nextData, page } = this.state;
+        Taro.showLoading({
+            title: '正在加载数据',
+        });
+        try {
+            const data =
+                nextData.page === page
+                    ? nextData.data!
+                    : await services.getListData(page);
+
+            this.setState(
+                {
+                    data,
+                    page,
+                    inited: true,
+                },
+                () => {
+                    Taro.hideLoading();
+                    Taro.pageScrollTo({
+                        scrollTop: 0,
+                    });
+                    // 预加载下一页
+                    this.loadNextPage();
+                }
+            );
+        } catch (error) {
+            console.log(error);
+            Taro.hideLoading();
+            this.getPageList();
+        }
     }
 
     onPageChange(page: number) {
-      this.setState({
-        page
-      }, ()=> {
-        this.getPageList();
-      })
+        this.setState(
+            {
+                page,
+            },
+            () => {
+                this.getPageList();
+            }
+        );
     }
 
     async loadNextPage() {
-      const nextPage = this.state.page + 1;
-      try {
-        const data = await services.getListData(nextPage);
-        this.setState({
-          nextData: {
-            data,
-            page: nextPage
-          }
-        })
-      } catch (error) {
-          console.log(error);
-      }
+        const nextPage = this.state.page + 1;
+        try {
+            const data = await services.getListData(nextPage);
+            this.setState({
+                nextData: {
+                    data,
+                    page: nextPage,
+                },
+            });
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     render() {
-      const { data, inited, page } = this.state;
-      const renderList =  inited && data.list.map((item, index)=><ListItem data={item} key={index} />);
-      const renderContainer = 
-        inited 
-        ? (
-          <View className={styles.container}>
-                <View className={styles.list}>
-                  { renderList }
-                </View>
+        const { data, inited, page } = this.state;
+        const renderList =
+            inited &&
+            data.list.map((item, index) => (
+                <ListItem data={item} key={index} />
+            ));
+        const renderContainer = inited ? (
+            <View className={styles.container}>
+                <View className={styles.list}>{renderList}</View>
                 <View className={styles.pagination}>
-                  <Pagination 
-                    total={data.page_count} 
-                    current={page}
-                    onChange={this.onPageChange}
-                  >
-                  </Pagination>
+                    <Pagination
+                        total={data.page_count}
+                        current={page}
+                        onChange={this.onPageChange}
+                    ></Pagination>
                 </View>
             </View>
-        )
-        : null;
+        ) : null;
         return renderContainer;
     }
 }

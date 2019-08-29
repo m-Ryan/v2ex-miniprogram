@@ -1,7 +1,7 @@
 import Taro, { Component, Config } from '@tarojs/taro';
 import { View } from '@tarojs/components';
 import styles from './index.module.scss';
-import {services} from '@/services';
+import { services } from '@/services';
 import { observer, inject } from '@tarojs/mobx';
 import { ComponentType } from 'react';
 import { ListItem } from '@/components/list-item';
@@ -12,21 +12,21 @@ import CookieStorage from '@/utils/cookie-storage';
 import { IListItem } from '@/interface/v2ex/info';
 
 interface IState {
-  data: IListItem[],
-  inited: boolean,
+    data: IListItem[];
+    inited: boolean;
 }
 interface IProps {
-  user: IStoreUser
+    user: IStoreUser;
 }
 
 @inject('user')
 @observer
 @BindThis()
 class Index extends Component<IProps, IState> {
-  state: IState = {
-    data: [],
-    inited: false
-  }
+    state: IState = {
+        data: [],
+        inited: false,
+    };
     /**
      * 指定config的类型声明为: Taro.Config
      *
@@ -39,44 +39,44 @@ class Index extends Component<IProps, IState> {
     };
 
     componentWillMount() {
-      this.getPageList();
-        
+        this.getPageList();
     }
 
     @throttle(1000)
     async getPageList() {
-      Taro.showLoading({
-        title: '正在加载数据'
-      })
-      try {
-        const data = await services.getCollection(CookieStorage.getCookie());
-        
-        this.setState({
-          data,
-          inited: true
-        }, ()=>{
-          Taro.hideLoading();
-        })
-      } catch (error) {
-          console.log(error);
-          Taro.hideLoading();
-      }
+        Taro.showLoading({
+            title: '正在加载数据',
+        });
+        try {
+            const data = await services.getCollection(
+                CookieStorage.getCookie()
+            );
+
+            this.setState(
+                {
+                    data,
+                    inited: true,
+                },
+                () => {
+                    Taro.hideLoading();
+                }
+            );
+        } catch (error) {
+            console.log(error);
+            Taro.hideLoading();
+        }
     }
 
-  
     render() {
-      const { data, inited } = this.state;
-      const renderList =  inited && data.map((item, index)=><ListItem data={item} key={index} />);
-      const renderContainer = 
-        inited 
-        ? (
-          <View className={styles.container}>
-                <View className={styles.list}>
-                  { renderList }
-                </View>
+        const { data, inited } = this.state;
+        const renderList =
+            inited &&
+            data.map((item, index) => <ListItem data={item} key={index} />);
+        const renderContainer = inited ? (
+            <View className={styles.container}>
+                <View className={styles.list}>{renderList}</View>
             </View>
-        )
-        : null;
+        ) : null;
         return renderContainer;
     }
 }

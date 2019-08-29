@@ -1,40 +1,41 @@
-import { IObject } from "@/interface/global";
+import { IObject } from '@/interface/global';
 import qs from 'qs';
 export function formatV2exUrl(url: string) {
-  if (url.startsWith('/static/img/')) {
-    return `https://www.v2ex.com` + url;
-  }
-  return 'https:' + url;
+    if (url.startsWith('/static/img/')) {
+        return `https://www.v2ex.com` + url;
+    }
+    return 'https:' + url;
 }
 
-
 export function formatClassName(...args: string[]) {
-  return args.join(' ');
+    return args.join(' ');
 }
 
 export function formatPath(url: string, query?: IObject<string>) {
-  if (query) {
-    url += `?${qs.stringify(query)}`
-  }
-  return url;
+    if (query) {
+        url += `?${qs.stringify(query)}`;
+    }
+    return url;
 }
 
 export function getDetailId(url: string) {
-  return parseInt(url.replace('/t/', '')).toString();
+    return parseInt(url.replace('/t/', '')).toString();
 }
 
 export function getNodeName(url: string) {
-  return url.replace('/go/', '');
+    return url.replace('/go/', '');
 }
 
 export function getTabUrl(url: string) {
-  return url.replace(/\/\?tab=/, '');
+    return url.replace(/\/\?tab=/, '');
 }
 
 export function getMemberUrl(url: string) {
-  return url.replace('/member/', '');
+    return url.replace('/member/', '');
 }
 
 export function getFavoriteUrl(url: string) {
-  return url.replace('/favorite/topic/', '').replace('/unfavorite/topic/', '');
+    return url
+        .replace('/favorite/topic/', '')
+        .replace('/unfavorite/topic/', '');
 }

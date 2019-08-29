@@ -1,4 +1,1 @@
-
-export class Wx_Tool {
-
-}
+export class Wx_Tool {}
