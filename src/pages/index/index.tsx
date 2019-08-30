@@ -20,12 +20,14 @@ import {
 import { Pages } from '@/constants';
 import { EmptyIcon } from '@/components/empty';
 import CookieStorage from '@/utils/cookie-storage';
+import { BaseEventOrig } from '@tarojs/components/types/common';
 
 interface IState {
     data: IV2exInfo;
     inited: boolean;
     currentTab: number;
     currentTabBar: number;
+    swipeable: boolean
 }
 interface IProps {
     user: typeof store.user;
@@ -48,6 +50,7 @@ class Index extends Component<IProps, IState> {
         inited: false,
         currentTab: 0,
         currentTabBar: 0,
+        swipeable: false
     };
     /**
      * 指定config的类型声明为: Taro.Config
@@ -57,12 +60,16 @@ class Index extends Component<IProps, IState> {
      * 提示和声明 navigationBarTextStyle: 'black' | 'white' 类型冲突, 需要显示声明类型
      */
     config: Config = {
-        navigationBarTitleText: '首页',
+        navigationBarTitleText: '首页'
     };
 
     componentWillMount() {
-        this.getTabData();
+      if (CookieStorage.getCookie()) {
+        this.props.user.login(CookieStorage.getCookie());
+      }
+      this.getTabData();
     }
+    
 
     async getTabData(tab: string = '') {
         try {
@@ -70,9 +77,6 @@ class Index extends Component<IProps, IState> {
                 title: '正在加载数据',
             });
             const data = await services.getTabData(tab);
-            if (CookieStorage.getCookie()) {
-                this.props.user.login(CookieStorage.getCookie());
-            }
             this.setState(
                 {
                     data,
@@ -88,7 +92,8 @@ class Index extends Component<IProps, IState> {
         }
     }
 
-    onChangeTab(index: number) {
+    onChangeTab(index: number, event: BaseEventOrig<any>) {
+      
         this.setState({
             currentTab: index,
         });
@@ -105,9 +110,15 @@ class Index extends Component<IProps, IState> {
         );
     }
 
-    render() {
-        const { data, inited, currentTab, currentTabBar } = this.state;
+    onReadMore() {
+      Taro.switchTab({
+        url: Pages.ListIndex
+      })
+    }
 
+    render() {
+        const { data, inited, currentTab, currentTabBar, swipeable } = this.state;
+        console.log(swipeable)
         const renderList =
             data.list.length > 0 ? (
                 data.list.map((item, index) => (
@@ -213,22 +224,25 @@ class Index extends Component<IProps, IState> {
                 <AtTabs
                     current={currentTab}
                     tabList={[{ title: '最新' }, { title: '推荐' }]}
-                    swipeable={false}
+                    swipeable={swipeable}
                     onClick={this.onChangeTab}
                 >
                     <AtTabsPane current={currentTab} index={0}>
                         <View className={styles.tab1}>
-                            <View className={styles.scrollTabbar}>
-                                <View className={styles.tabbar}>
-                                    {renderTabBarList}
-                                </View>
-                            </View>
-                            <View className={styles.scrollSecondTabbar}>
-                                <View className={styles.secondtabbar}>
-                                    {renderSecondTabBarList}
-                                </View>
+                            <View>
+                              <View className={styles.scrollTabbar}>
+                                  <View className={styles.tabbar}>
+                                      {renderTabBarList}
+                                  </View>
+                              </View>
+                              <View className={styles.scrollSecondTabbar}>
+                                  <View className={styles.secondtabbar}>
+                                      {renderSecondTabBarList}
+                                  </View>
+                              </View>
                             </View>
                             <View className={styles.list}>{renderList}</View>
+                            <View className={styles.readMore} onClick={this.onReadMore}>查看更多</View>
                         </View>
                     </AtTabsPane>
                     <AtTabsPane current={currentTab} index={1}>

@@ -61,6 +61,9 @@ class Index extends Component<IProps, IState> {
         Taro.showLoading({
             title: '正在加载数据',
         });
+        Taro.pageScrollTo({
+            scrollTop: 0,
+        });
         try {
             const data =
                 nextData.page === page
@@ -75,9 +78,6 @@ class Index extends Component<IProps, IState> {
                 },
                 () => {
                     Taro.hideLoading();
-                    Taro.pageScrollTo({
-                        scrollTop: 0,
-                    });
                     // 预加载下一页
                     this.loadNextPage();
                 }

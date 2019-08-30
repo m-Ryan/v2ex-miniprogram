@@ -9,6 +9,7 @@ export enum Pages {
     DetailIndex = '/pages/detail/index',
     NodeListIndex = '/pages/node-list/index',
     CollectionIndex = '/pages/collection/index',
+    FeedbackIndex = '/pages/feedback/index',
 }
 
 export const DEFAULT_AVATAR =

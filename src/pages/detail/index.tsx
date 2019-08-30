@@ -12,6 +12,7 @@ import {
 import { BindThis } from '@/utils/bind-this';
 import { throttle } from '@/utils/throttle';
 import { IV2exDetail } from '@/interface/v2ex/detail';
+import CookieStorage from '@/utils/cookie-storage';
 
 interface IState {
     data: IV2exDetail | null;
@@ -28,7 +29,7 @@ export default class Detail extends Component<IState> {
      * 提示和声明 navigationBarTextStyle: 'black' | 'white' 类型冲突, 需要显示声明类型
      */
     config: Config = {
-        navigationBarTitleText: '详情',
+        navigationBarTitleText: '详情'
     };
 
     state: IState = {
@@ -108,6 +109,13 @@ export default class Detail extends Component<IState> {
     }
 
     async onCollected() {
+        if (!CookieStorage.getCookie()) {
+            Taro.showToast({
+                title: '请先登录',
+                icon: 'none',
+            });
+            return;
+        }
         const { data } = this.state;
 
         // 由于接口可能会很慢，所以先给反馈
@@ -145,7 +153,13 @@ export default class Detail extends Component<IState> {
 
     async onIgnore() {
         const { data } = this.state;
-
+        if (!CookieStorage.getCookie()) {
+            Taro.showToast({
+                title: '请先登录',
+                icon: 'none',
+            });
+            return;
+        }
         // 由于接口可能会很慢，所以先给反馈
         const isIgnore = data!.more_info.is_ignore;
         data!.more_info.is_ignore = !isIgnore;
@@ -191,6 +205,9 @@ export default class Detail extends Component<IState> {
         if (!data) return null;
         const isEnd = currentPage <= 1;
         const replayList = [...data.replay.list].reverse();
+        const richText = data.desc
+        .replace('<img ', '<img style="max-width:100%;height:auto;display:block;"')
+        .replace('<h1', '<h1 style="font-size: 16px;"');
         const renderReplayList = replayList.map(item => {
             return (
                 <View className={styles.replayItem}>
@@ -224,12 +241,22 @@ export default class Detail extends Component<IState> {
             >
                 <View className={styles.container}>
                     <View className={styles.header}>
-                        <View className={styles.title}>{data.title}</View>
+                        <View className={styles.title}>                         
+                            <Image
+                                onClick={() => this.goUserInfo(data.user.url)}
+                                src={formatV2exUrl(data.user.avatar)}
+                                mode="widthFix"
+                                className={styles.avatar}
+                            />
+                            <View>{data.title}</View>
+                        </View>
                         <View className={styles.relativeInfo}>
                             {data.content}
                         </View>
                         <RichText
-                            nodes={data.desc}
+                            nodes={
+                                richText
+                            }
                             className={styles.desc}
                         ></RichText>
                     </View>

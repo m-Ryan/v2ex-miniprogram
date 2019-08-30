@@ -44,7 +44,12 @@
       @extend .baseScrollView;
       padding: 8px 40px;
     }
-
+    .readMore {
+      padding: 20px 0;
+      font-size: 28px;
+      color: #666;
+      text-align: center;
+    }
   }
   .tab2 {
     @extend .baseTab;

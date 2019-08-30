@@ -37,6 +37,7 @@ class App extends Component<{}, IAppState> {
             'pages/detail/index',
             'pages/node-list/index',
             'pages/collection/index',
+            'pages/feedback/index',
         ],
         window: {
             backgroundTextStyle: 'light',

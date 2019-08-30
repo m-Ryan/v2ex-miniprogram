@@ -46,6 +46,12 @@ export default class Index extends Component<IProps, IState> {
         });
     }
 
+    goFeedback() {
+        Taro.navigateTo({
+            url: formatPath(Pages.FeedbackIndex),
+        });
+    }
+
     setLogout() {
         this.props.user.logout();
     }
@@ -144,6 +150,15 @@ export default class Index extends Component<IProps, IState> {
                         }}
                         arrow="right"
                     />
+                    <AtListItem
+                        onClick={this.goFeedback}
+                        title={'相关'}
+                        iconInfo={{
+                            size: 25,
+                            color: '#3285ce',
+                            value: 'settings',
+                        }}
+                    />
                     {renderWidgets}
                     <AtListItem
                         onClick={this.setLogout}
@@ -174,6 +189,15 @@ export default class Index extends Component<IProps, IState> {
                             value: 'credit-card',
                         }}
                     />
+                    <AtListItem
+                        onClick={this.goFeedback}
+                        title={'相关'}
+                        iconInfo={{
+                            size: 25,
+                            color: '#3285ce',
+                            value: 'settings',
+                        }}
+                    />
                 </AtList>
 
                 <AtModal isOpened={showModal}>
@@ -187,7 +211,8 @@ export default class Index extends Component<IProps, IState> {
                                         cookieValue: event.detail.value,
                                     })
                                 }
-                                placeholder="此处粘贴cookie"
+                                className={styles.area}
+                                placeholder="电脑登录V站后，将网页携带的cookie粘贴在此处。注意，不能直接使用 document.cookie，必须是请求头携带的"
                                 placeholderStyle={'#999'}
                                 autoFocus
                                 value={cookieValue}

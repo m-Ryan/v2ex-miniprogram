@@ -86,11 +86,11 @@ export class ListItem extends Component<IProps> {
                             <Text
                                 className={formatClassName(
                                     styles.replayCount,
-                                    'icon anticon icon-eyeo'
+                                    'icon anticon icon-message1'
                                 )}
                             >
                                 {' '}
-                                {item.replay_count}
+                                {item.replay_count || 0}
                             </Text>
                         </View>
                     </View>
