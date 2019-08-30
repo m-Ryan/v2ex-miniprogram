@@ -1,7 +1,7 @@
 import Taro from '@tarojs/taro';
 import { IObject } from 'src/interface/global';
 import CookieStorage from './cookie-storage';
-Taro.getStorageInfoSync();
+Taro.getStorageInfoSync()
 class Request {
     constructor(baseUrl?: string) {
         if (baseUrl) {
@@ -21,7 +21,7 @@ class Request {
         const config: Taro.request.Param<any> = {
             url: httpUrl,
             method,
-            header: {},
+            header: {}
         };
 
         if (data) config.data = data;
@@ -29,7 +29,7 @@ class Request {
         if (header) {
             config.header = {
                 ...config.header,
-                ...header,
+                ...header
             };
         }
         if (CookieStorage.getCookie()) {
@@ -42,8 +42,8 @@ class Request {
             }
             throw {
                 message: (res.data as any).message,
-                code: (res.data as any).statusCode,
-            };
+                code: (res.data as any).statusCode
+            }
         });
     }
 

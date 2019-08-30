@@ -32,13 +32,13 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 4,
+			"current": 0,
 			"list": [
 				{
 					"id": 0,
 					"name": "pages/detail/index",
 					"pathName": "pages/detail/index",
-					"query": "id=596077&title=aa",
+					"query": "id=596166&title=aa",
 					"scene": null
 				},
 				{
