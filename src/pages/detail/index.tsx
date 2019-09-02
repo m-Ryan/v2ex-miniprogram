@@ -8,6 +8,7 @@ import {
     formatPath,
     getMemberUrl,
     formatClassName,
+    sendStatisticalData,
 } from '@/utils/util';
 import { BindThis } from '@/utils/bind-this';
 import { throttle } from '@/utils/throttle';
@@ -29,7 +30,7 @@ export default class Detail extends Component<IState> {
      * 提示和声明 navigationBarTextStyle: 'black' | 'white' 类型冲突, 需要显示声明类型
      */
     config: Config = {
-        navigationBarTitleText: '详情'
+        navigationBarTitleText: '详情',
     };
 
     state: IState = {
@@ -109,6 +110,7 @@ export default class Detail extends Component<IState> {
     }
 
     async onCollected() {
+        sendStatisticalData('collected');
         if (!CookieStorage.getCookie()) {
             Taro.showToast({
                 title: '请先登录',
@@ -152,6 +154,7 @@ export default class Detail extends Component<IState> {
     }
 
     async onIgnore() {
+        sendStatisticalData('ignore');
         const { data } = this.state;
         if (!CookieStorage.getCookie()) {
             Taro.showToast({
@@ -194,6 +197,7 @@ export default class Detail extends Component<IState> {
     }
 
     async onReplay() {
+        sendStatisticalData('replay');
         Taro.showToast({
             title: '该功能有需要再做',
             icon: 'none',
@@ -206,8 +210,11 @@ export default class Detail extends Component<IState> {
         const isEnd = currentPage <= 1;
         const replayList = [...data.replay.list].reverse();
         const richText = data.desc
-        .replace('<img ', '<img style="max-width:100%;height:auto;display:block;"')
-        .replace('<h1', '<h1 style="font-size: 16px;"');
+            .replace(
+                '<img ',
+                '<img style="max-width:100%;height:auto;display:block;"'
+            )
+            .replace('<h1', '<h1 style="font-size: 16px;"');
         const renderReplayList = replayList.map(item => {
             return (
                 <View className={styles.replayItem}>
@@ -241,7 +248,7 @@ export default class Detail extends Component<IState> {
             >
                 <View className={styles.container}>
                     <View className={styles.header}>
-                        <View className={styles.title}>                         
+                        <View className={styles.title}>
                             <Image
                                 onClick={() => this.goUserInfo(data.user.url)}
                                 src={formatV2exUrl(data.user.avatar)}
@@ -254,9 +261,7 @@ export default class Detail extends Component<IState> {
                             {data.content}
                         </View>
                         <RichText
-                            nodes={
-                                richText
-                            }
+                            nodes={richText}
                             className={styles.desc}
                         ></RichText>
                     </View>

@@ -3,7 +3,7 @@ import { View, Image, Button, Textarea } from '@tarojs/components';
 import { inject, observer } from '@tarojs/mobx';
 
 import styles from './index.module.scss';
-import { formatV2exUrl, formatPath } from '@/utils/util';
+import { formatV2exUrl, formatPath, sendStatisticalData } from '@/utils/util';
 import { store } from '@/store';
 import {
     AtList,
@@ -50,10 +50,12 @@ export default class Index extends Component<IProps, IState> {
         Taro.navigateTo({
             url: formatPath(Pages.FeedbackIndex),
         });
+        sendStatisticalData('feedback');
     }
 
     setLogout() {
         this.props.user.logout();
+        sendStatisticalData('logout');
     }
 
     async setLogin() {
@@ -75,6 +77,7 @@ export default class Index extends Component<IProps, IState> {
         } catch (error) {
             Taro.showToast(error.message);
         }
+        sendStatisticalData('login');
     }
 
     renderLoginContent() {

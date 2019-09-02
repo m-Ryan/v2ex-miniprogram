@@ -16,6 +16,7 @@ import {
     getNodeName,
     formatClassName,
     getTabUrl,
+    sendStatisticalData,
 } from '@/utils/util';
 import { Pages } from '@/constants';
 import { EmptyIcon } from '@/components/empty';
@@ -27,7 +28,7 @@ interface IState {
     inited: boolean;
     currentTab: number;
     currentTabBar: number;
-    swipeable: boolean
+    swipeable: boolean;
 }
 interface IProps {
     user: typeof store.user;
@@ -50,7 +51,7 @@ class Index extends Component<IProps, IState> {
         inited: false,
         currentTab: 0,
         currentTabBar: 0,
-        swipeable: false
+        swipeable: false,
     };
     /**
      * 指定config的类型声明为: Taro.Config
@@ -60,16 +61,15 @@ class Index extends Component<IProps, IState> {
      * 提示和声明 navigationBarTextStyle: 'black' | 'white' 类型冲突, 需要显示声明类型
      */
     config: Config = {
-        navigationBarTitleText: '首页'
+        navigationBarTitleText: '首页',
     };
 
     componentWillMount() {
-      if (CookieStorage.getCookie()) {
-        this.props.user.login(CookieStorage.getCookie());
-      }
-      this.getTabData();
+        if (CookieStorage.getCookie()) {
+            this.props.user.login(CookieStorage.getCookie());
+        }
+        this.getTabData();
     }
-    
 
     async getTabData(tab: string = '') {
         try {
@@ -93,7 +93,6 @@ class Index extends Component<IProps, IState> {
     }
 
     onChangeTab(index: number, event: BaseEventOrig<any>) {
-      
         this.setState({
             currentTab: index,
         });
@@ -111,14 +110,19 @@ class Index extends Component<IProps, IState> {
     }
 
     onReadMore() {
-      Taro.switchTab({
-        url: Pages.ListIndex
-      })
+        Taro.switchTab({
+            url: Pages.ListIndex,
+        });
     }
 
     render() {
-        const { data, inited, currentTab, currentTabBar, swipeable } = this.state;
-        console.log(swipeable)
+        const {
+            data,
+            inited,
+            currentTab,
+            currentTabBar,
+            swipeable,
+        } = this.state;
         const renderList =
             data.list.length > 0 ? (
                 data.list.map((item, index) => (
@@ -230,19 +234,24 @@ class Index extends Component<IProps, IState> {
                     <AtTabsPane current={currentTab} index={0}>
                         <View className={styles.tab1}>
                             <View>
-                              <View className={styles.scrollTabbar}>
-                                  <View className={styles.tabbar}>
-                                      {renderTabBarList}
-                                  </View>
-                              </View>
-                              <View className={styles.scrollSecondTabbar}>
-                                  <View className={styles.secondtabbar}>
-                                      {renderSecondTabBarList}
-                                  </View>
-                              </View>
+                                <View className={styles.scrollTabbar}>
+                                    <View className={styles.tabbar}>
+                                        {renderTabBarList}
+                                    </View>
+                                </View>
+                                <View className={styles.scrollSecondTabbar}>
+                                    <View className={styles.secondtabbar}>
+                                        {renderSecondTabBarList}
+                                    </View>
+                                </View>
                             </View>
                             <View className={styles.list}>{renderList}</View>
-                            <View className={styles.readMore} onClick={this.onReadMore}>查看更多</View>
+                            <View
+                                className={styles.readMore}
+                                onClick={this.onReadMore}
+                            >
+                                查看更多
+                            </View>
                         </View>
                     </AtTabsPane>
                     <AtTabsPane current={currentTab} index={1}>

@@ -1,4 +1,5 @@
 import { IObject } from '@/interface/global';
+import Taro from '@tarojs/taro';
 import qs from 'qs';
 export function formatV2exUrl(url: string) {
     if (url.startsWith('/static/img/')) {
@@ -38,4 +39,11 @@ export function getFavoriteUrl(url: string) {
     return url
         .replace('/favorite/topic/', '')
         .replace('/unfavorite/topic/', '');
+}
+
+export function sendStatisticalData(
+    name: string,
+    params?: IObject<string | number>
+) {
+    Taro.getApp().mtj.trackEvent(name, params);
 }

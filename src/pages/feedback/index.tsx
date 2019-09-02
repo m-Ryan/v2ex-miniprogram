@@ -22,12 +22,9 @@ class Index extends Component {
         navigationBarTitleText: '关于我们',
     };
 
-    componentWillMount() {
-      
-    }
+    componentWillMount() {}
 
     render() {
-       
         return (
             <View className={styles.container}>
                 <AtList>
@@ -40,7 +37,7 @@ class Index extends Component {
                             value: 'user',
                         }}
                     />
-                   
+
                     <AtListItem
                         title={`声明`}
                         note="内容来源于V2ex，本小程序仅供学习交流使用"
@@ -50,11 +47,9 @@ class Index extends Component {
                             value: 'streaming',
                         }}
                     />
-                   
                 </AtList>
-
             </View>
-        )
+        );
     }
 }
 

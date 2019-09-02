@@ -1,3 +1,4 @@
+import './utils/mtj-wx-sdk';
 import '@tarojs/async-await';
 import Taro, { Component, Config } from '@tarojs/taro';
 import Index from './pages/index';
